@@ -36,8 +36,8 @@ String displayStatus = "Display is on";
 AWS_IOT aws;
 
 // Wifi Setup
-char WIFI_SSID[] = "Megulo25";
-char WIFI_PASSWORD[] = "toma15870";
+char WIFI_SSID[] = "Joe";
+char WIFI_PASSWORD[] = "rpi252525";
 
 // AWS Setup
 char HOST_ADDRESS[] = "a28vigmgj5655d-ats.iot.us-east-1.amazonaws.com";
@@ -46,6 +46,7 @@ char TOPIC_NAME[] = "iot/topic";
 
 int status = WL_IDLE_STATUS;
 int tick = 0, msgCount = 0, msgReceived = 0;
+char dataPayload[512];
 char payload[512];
 char rcvdPayload[512];
 
@@ -129,7 +130,8 @@ void loop()
   // -------------------------------
   // Send data to AWS
   Serial.println("Sending data to AWS:");
-//  aws.publish(TOPIC_NAME, "{id: randomVariable, data: 2525}");
+  sprintf(dataPayload, "{\"id\":\"%f\", \"data\":\"%f\"}", random(0, 100), "55");
+  aws.publish(TOPIC_NAME, dataPayload);
   delay(1000);
 
   // -------------------------------
