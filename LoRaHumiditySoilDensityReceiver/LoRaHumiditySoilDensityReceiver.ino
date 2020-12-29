@@ -29,7 +29,8 @@ String displayStatus = "Display is on";
 
 // -------------------------------
 // AWS and Wifi modules
-#include <AWS_IOT.h>
+//#include <AWS_IOT.h>
+
 #include <WiFi.h>
 
 // Initialize AWS
