@@ -37,18 +37,20 @@ String displayStatus = "Display is on";
 AWS_IOT aws;
 
 // Wifi Setup
-char WIFI_SSID[] = "Joe";
-char WIFI_PASSWORD[] = "rpi252525";
+char WIFI_SSID[] = "Abebe25";
+char WIFI_PASSWORD[] = "Ethiopia";
 
 // AWS Setup
 char HOST_ADDRESS[] = "a28vigmgj5655d-ats.iot.us-east-1.amazonaws.com";
 char CLIENT_ID[] = "ESP32BOARDFIRSTATTEMPTBYMEGULOABEBE";
-char TOPIC_NAME[] = "ESP32-2-SUBTOPIC";
+char TOPIC_NAME[] = "iot/topic";
 
 int status = WL_IDLE_STATUS;
 int tick = 0, msgCount = 0, msgReceived = 0;
+char dataPayload[512];
 char payload[512];
 char rcvdPayload[512];
+int count = 0;
 
 // AWS Callback function
 void mySubCallBackHandler(char *topicName, int payloadLen, char *payLoad)
@@ -126,6 +128,17 @@ void loop()
   //OLED(0,8,"Received string: "+ rx_str);
   OLED(0, 0, "Received string: " + rx_str);
   Heltec.display->display();
+
+  // -------------------------------
+  // Send data to AWS
+  Serial.println("Sending data to AWS:");
+  Serial.println(rx_str);
+  sprintf(dataPayload, "{\"id\":\"%d\", \"data\":\"%s\"}", count, rx_str);
+  count++;
+  aws.publish(TOPIC_NAME, dataPayload);
+  delay(1000);
+
+  // -------------------------------
 }
 
 void initializationLogo()
