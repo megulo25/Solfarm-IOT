@@ -36,8 +36,8 @@ String displayStatus = "Display is on";
 AWS_IOT aws;
 
 // Wifi Setup
-char WIFI_SSID[] = "Joe";
-char WIFI_PASSWORD[] = "rpi252525";
+char WIFI_SSID[] = "Abebe25";
+char WIFI_PASSWORD[] = "Ethiopia";
 
 // AWS Setup
 char HOST_ADDRESS[] = "a28vigmgj5655d-ats.iot.us-east-1.amazonaws.com";
@@ -49,6 +49,7 @@ int tick = 0, msgCount = 0, msgReceived = 0;
 char dataPayload[512];
 char payload[512];
 char rcvdPayload[512];
+int count = 0;
 
 // AWS Callback function
 void mySubCallBackHandler(char *topicName, int payloadLen, char *payLoad)
@@ -130,7 +131,9 @@ void loop()
   // -------------------------------
   // Send data to AWS
   Serial.println("Sending data to AWS:");
-  sprintf(dataPayload, "{\"id\":\"%f\", \"data\":\"%f\"}", random(0, 100), "55");
+  Serial.println(rx_str);
+  sprintf(dataPayload, "{\"id\":\"%d\", \"data\":\"%s\"}", count, rx_str);
+  count++;
   aws.publish(TOPIC_NAME, dataPayload);
   delay(1000);
 
