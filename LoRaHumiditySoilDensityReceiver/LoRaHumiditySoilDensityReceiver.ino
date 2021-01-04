@@ -29,16 +29,15 @@ String displayStatus = "Display is on";
 
 // -------------------------------
 // AWS and Wifi modules
-//#include <AWS_IOT.h>
-
+#include <AWS_IOT.h>
 #include <WiFi.h>
 
 // Initialize AWS
 AWS_IOT aws;
 
 // Wifi Setup
-char WIFI_SSID[] = "Abebe25";
-char WIFI_PASSWORD[] = "Ethiopia";
+char WIFI_SSID[] = "TC8717TC5";
+char WIFI_PASSWORD[] = "TC8717T0EDAC5";
 
 // AWS Setup
 char HOST_ADDRESS[] = "a28vigmgj5655d-ats.iot.us-east-1.amazonaws.com";
@@ -50,7 +49,6 @@ int tick = 0, msgCount = 0, msgReceived = 0;
 char dataPayload[512];
 char payload[512];
 char rcvdPayload[512];
-int count = 0;
 
 // AWS Callback function
 void mySubCallBackHandler(char *topicName, int payloadLen, char *payLoad)
@@ -133,8 +131,7 @@ void loop()
   // Send data to AWS
   Serial.println("Sending data to AWS:");
   Serial.println(rx_str);
-  sprintf(dataPayload, "{\"id\":\"%d\", \"data\":\"%s\"}", count, rx_str);
-  count++;
+  sprintf(dataPayload, "{\"data\":\"%s\"}", rx_str);
   aws.publish(TOPIC_NAME, dataPayload);
   delay(1000);
 
